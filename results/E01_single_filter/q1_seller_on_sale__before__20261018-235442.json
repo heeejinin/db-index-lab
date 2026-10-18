@@ -1,0 +1,109 @@
+{
+  "experiment": "E01_single_filter",
+  "query": "q1_seller_on_sale",
+  "query_file": "experiments/E01_single_filter/q1_seller_on_sale.sql",
+  "title": "판매자별 판매 중 상품 목록 (PDF 1-1)",
+  "label": "before",
+  "measured_at": "2026-10-18 23:54:42",
+  "params": {
+    "sellerId": 500
+  },
+  "sql": "SELECT id, name, price\nFROM products\nWHERE seller_id = 500\n  AND status = 'ON_SALE'",
+  "mode": "read",
+  "runs": 30,
+  "warmup": 5,
+  "result_rows": 112,
+  "client_ms": {
+    "avg": 38.748954166675276,
+    "p50": 36.99195800004418,
+    "p95": 46.14933400000609,
+    "p99": 69.0028330000132,
+    "min": 35.401917000001504,
+    "max": 69.0028330000132,
+    "stdev": 6.171485389825165
+  },
+  "server_ms": {
+    "avg": 38.205693133333334,
+    "p50": 36.463334,
+    "p95": 45.515542,
+    "p99": 68.149583,
+    "min": 34.974625,
+    "max": 68.149583,
+    "stdev": 6.101979456508672
+  },
+  "last_statement": {
+    "timer_wait": 38142916000,
+    "rows_examined": 200000,
+    "rows_sent": 112,
+    "rows_affected": 0,
+    "no_index_used": 1,
+    "select_scan": 1,
+    "select_range": 0,
+    "sort_rows": 0,
+    "sort_scan": 0,
+    "sort_merge_passes": 0,
+    "created_tmp_tables": 0,
+    "created_tmp_disk_tables": 0
+  },
+  "handler_reads": {
+    "Handler_read_key": 1,
+    "Handler_read_next": 0,
+    "Handler_read_prev": 0,
+    "Handler_read_first": 1,
+    "Handler_read_last": 0,
+    "Handler_read_rnd_next": 200001,
+    "Handler_read_rnd": 0,
+    "icp_attempts": 0,
+    "icp_no_match": 0,
+    "icp_out_of_range": 0,
+    "icp_match": 0,
+    "handler_total": 200003,
+    "icp_filtered": 0,
+    "total": 200003
+  },
+  "explain": {
+    "explain_cols": [
+      "id",
+      "select_type",
+      "table",
+      "partitions",
+      "type",
+      "possible_keys",
+      "key",
+      "key_len",
+      "ref",
+      "rows",
+      "filtered",
+      "Extra"
+    ],
+    "explain_rows": [
+      [
+        1,
+        "SIMPLE",
+        "products",
+        null,
+        "ALL",
+        null,
+        null,
+        null,
+        null,
+        198869,
+        1.0,
+        "Using where"
+      ]
+    ],
+    "explain_analyze": "-> Filter: ((products.`status` = 'ON_SALE') and (products.seller_id = 500))  (cost=20200 rows=1989) (actual time=0.837..47.3 rows=112 loops=1)\n    -> Table scan on products  (cost=20200 rows=198869) (actual time=0.0613..29.3 rows=200000 loops=1)\n"
+  },
+  "indexes": {
+    "products": [
+      "PRIMARY(id)"
+    ]
+  },
+  "table_rows": {
+    "products": 198869
+  },
+  "env": {
+    "mysql_version": "8.4.11",
+    "innodb_buffer_pool_size_mb": 1152
+  }
+}
